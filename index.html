@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gym Guide | Master Every Machine</title>
+    <!-- HTML5 QR Code Scanner Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
+    <style>
+        /* --- CORE STYLES & YELLOW + BLACK THEME --- */
+        :root {
+            --bg-color: #0d0f12;
+            --card-bg: #161920;
+            --accent-color: #ffcc00;
+            --accent-hover: #e6b800;
+            --text-main: #ffffff;
+            --text-sub: #9ca3af;
+            --border-color: #272c36;
+            --radius: 14px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 480px;
+            padding: 20px 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* --- NAVIGATION HEADER --- */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 14px;
+        }
+
+        .brand {
+            font-size: 1.1rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-btn {
+            background: var(--card-bg);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .qr-nav-btn {
+            color: var(--accent-color);
+            border-color: rgba(255, 204, 0, 0.4);
+        }
+
+        /* --- LANDING PAGE --- */
+        .hero-section {
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        .hero-title {
+            font-size: 2.1rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 10px;
+        }
+
+        .hero-subtitle {
+            color: var(--text-sub);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .cta-btn-primary {
+            width: 100%;
+            background: var(--accent-color);
+            color: #0d0f12;
+            padding: 14px;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(255, 204, 0, 0.25);
+        }
+
+        .cta-btn-secondary {
+            width: 100%;
+            background: var(--card-bg);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            border-radius: var(--radius);
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .steps-container {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 20px;
+        }
+
+        .steps-title {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-sub);
+            margin-bottom: 16px;
+        }
+
+        .step-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            margin-bottom: 16px;
+        }
+
+        .step-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .step-number {
+            background: rgba(255, 204, 0, 0.15);
+            color: var(--accent-color);
+            font-weight: 800;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 0.85rem;
+        }
+
+        .step-text strong {
+            display: block;
+            font-size: 0.95rem;
+            margin-bottom: 2px;
+        }
+
+        .step-text p {
+            font-size: 0.85rem;
+            color: var(--text-sub);
+        }
+
+        /* --- SINGLE MACHINE VIEW --- */
+        .machine-header {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .machine-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .target-badge {
+            display: inline-block;
+            background: rgba(255, 204, 0, 0.15);
+            color: var(--accent-color);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .section-title {
+            font-size: 0.95rem;
+            color: var(--text-sub);
+            margin: 15px 0 10px 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .exercise-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            overflow: hidden;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+        }
+
+        /* 9:16 VERTICAL SHORTS CONTAINER */
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 270px;
+            aspect-ratio: 9 / 16;
+            margin: 12px auto;
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .video-wrapper iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .card-details {
+            padding: 12px 16px;
+        }
+
+        .exercise-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .steps-list {
+            padding-left: 18px;
+            color: var(--text-sub);
+            font-size: 0.88rem;
+            line-height: 1.4;
+        }
+
+        .steps-list li {
+            margin-bottom: 4px;
+        }
+
+        /* --- MACHINE CATALOG --- */
+        .search-input {
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            color: var(--text-main);
+            font-size: 0.95rem;
+            outline: none;
+            margin-bottom: 14px;
+        }
+
+        .machine-list-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 16px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-main);
+        }
+
+        /* --- CAMERA SCANNER MODAL --- */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        #qr-reader {
+            width: 100%;
+            max-width: 350px;
+            background: #000;
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+
+        .close-scanner-btn {
+            margin-top: 20px;
+            background: var(--accent-color);
+            color: #0d0f12;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 20px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        /* --- UTILITIES --- */
+        .hidden {
+            display: none !important;
+        }
+
+        .footer-note {
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--text-sub);
+            margin-top: auto;
+            padding-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="app-container">
+        <!-- Header -->
+        <header>
+            <div class="brand" onclick="showLanding()">PILLAR FITNESS</div>
+            <div class="nav-actions">
+                <button class="nav-btn qr-nav-btn" onclick="openCameraScanner()">Scan</button>
+                <button id="nav-toggle-btn" class="nav-btn" onclick="toggleView()">Browse Machines</button>
+            </div>
+        </header>
+
+        <!-- VIEW 1: LANDING PAGE -->
+        <main id="landing-view">
+            <section class="hero-section">
+                <h1 class="hero-title">Stop Guessing.<br>Start Training.</h1>
+                <p class="hero-subtitle">
+                    Scan the QR code badge on any machine inside the gym to instantly see video guides and proper
+                    form—no app required.
+                </p>
+                <div class="button-group">
+                    <button class="cta-btn-primary" onclick="showCatalog()">
+                        Browse Equipment Library
+                    </button>
+                </div>
+            </section>
+
+            <section class="steps-container" style="margin-top:20px;">
+                <div class="steps-title">How It Works</div>
+                <div class="step-item">
+                    <div class="step-number">1</div>
+                    <div class="step-text">
+                        <strong>Locate the QR Badge</strong>
+                        <p>Look for the QR sticker attached to any gym machine.</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">2</div>
+                    <div class="step-text">
+                        <strong>Scan with Phone</strong>
+                        <p>Tap "📷 Scan" at the top header or use your phone camera.</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">3</div>
+                    <div class="step-text">
+                        <strong>Watch Shorts & Lift</strong>
+                        <p>Follow quick YouTube Shorts tutorials to build proper form.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- VIEW 2: SINGLE MACHINE PAGE (DIRECT QR ROUTE) -->
+        <main id="machine-view" class="hidden">
+            <div class="machine-header">
+                <h1 id="m-title" class="machine-title">Machine Title</h1>
+                <span id="m-target" class="target-badge">Target Muscle</span>
+            </div>
+
+            <h2 class="section-title">Exercises For This Machine</h2>
+            <div id="exercise-list">
+                <!-- Loaded via JS -->
+            </div>
+        </main>
+
+        <!-- VIEW 3: SEPARATE MACHINES CATALOG TAB -->
+        <main id="catalog-view" class="hidden">
+            <input type="text" id="search-bar" class="search-input" placeholder="Search machine or muscle group..."
+                onkeyup="filterMachines()">
+            <div id="catalog-list">
+                <!-- Loaded via JS -->
+            </div>
+        </main>
+
+        <!-- CAMERA SCANNER MODAL -->
+        <div id="scanner-modal" class="modal hidden">
+            <div id="qr-reader"></div>
+            <button class="close-scanner-btn" onclick="closeCameraScanner()">Close Camera</button>
+        </div>
+
+        <div class="footer-note">
+            PowerFit Gym Guide • Scan QR codes on equipment
+        </div>
+    </div>
+
+    <script>
+        /* --- ALL 14 GYM MACHINES DATABASE --- */
+        const gymData = {
+            "lat-pulldown": {
+                name: "Lat Pulldown Machine",
+                target: "Back & Biceps",
+                exercises: [
+                    {
+                        name: "Wide Grip Lat Pulldown",
+                        youtubeId: "https://youtube.com/shorts/5s6KGLTMgoI?si=tQyg6T0Hu4aFAIAZ",
+                        steps: [
+                            "Adjust thigh pads so your legs are firmly locked in place.",
+                            "Grasp bar wider than shoulder-width with an overhand grip.",
+                            "Pull bar down smoothly to upper chest."
+                        ]
+                    }
+                ]
+            },
+            "bench-press": {
+                name: "Flat Bench Press",
+                target: "Chest, Shoulders & Triceps",
+                exercises: [
+                    {
+                        name: "Barbell Flat Bench Press",
+                        youtubeId: "https://youtube.com/shorts/XjrsqShr-Ic?si=W0dg_9Dk6TWL9AIh",
+                        steps: [
+                            "Lie flat with feet firmly planted on the floor.",
+                            "Grip bar slightly wider than shoulder-width.",
+                            "Lower bar to mid-chest, then press back up."
+                        ]
+                    }
+                ]
+            },
+            "incline-bench-press": {
+                name: "Incline Bench Press",
+                target: "Upper Chest & Shoulders",
+                exercises: [
+                    {
+                        name: "Incline Bench Press",
+                        youtubeId: "https://youtube.com/shorts/98HWfiRonkE?si=ZGNKl8zNbllTK0oG",
+                        steps: [
+                            "Set bench angle to roughly 30 to 45 degrees.",
+                            "Lower weight smoothly to upper chest level.",
+                            "Press upward vertically until arms extend."
+                        ]
+                    }
+                ]
+            },
+            "decline-bench-press": {
+                name: "Decline Bench Press",
+                target: "Lower Chest & Triceps",
+                exercises: [
+                    {
+                        name: "Decline Bench Press",
+                        youtubeId: "https://youtube.com/shorts/zBX-1WrHYuI?si=mfhDJImaYy7QMGZW",
+                        steps: [
+                            "Secure legs safely into ankle pads before laying back.",
+                            "Lower weight under control to lower chest level.",
+                            "Press up smoothly keeping core engaged."
+                        ]
+                    }
+                ]
+            },
+            "bicep-curl-bench": {
+                name: "Bicep Preacher Curl Bench",
+                target: "Biceps",
+                exercises: [
+                    {
+                        name: "Preacher Curl",
+                        youtubeId: "https://youtube.com/shorts/Cn_S3OKOWBc?si=y9XF0eQ-LFT9xPfX",
+                        steps: [
+                            "Rest armpits snugly over top edge of arm pad.",
+                            "Lower weight down slowly until arms extend.",
+                            "Squeeze biceps at peak contraction at top."
+                        ]
+                    }
+                ]
+            },
+            "chest-press-machine": {
+                name: "Seated Chest Press Machine",
+                target: "Chest & Triceps",
+                exercises: [
+                    {
+                        name: "Seated Machine Chest Press",
+                        youtubeId: "https://youtube.com/shorts/hkU6fSHcslw?si=zl0H9ukYXId0-76z",
+                        steps: [
+                            "Adjust seat height so handles align with mid-chest.",
+                            "Press handles forward smoothly until arms extend.",
+                            "Return under control without letting weights slam."
+                        ]
+                    }
+                ]
+            },
+            "chest-fly-machine": {
+                name: "Pec Deck / Chest Fly Machine",
+                target: "Chest (Inner/Outer Pecs)",
+                exercises: [
+                    {
+                        name: "Seated Machine Fly",
+                        youtubeId: "https://youtube.com/shorts/a9vQ_hwIksU?si=-qco1N6kJTi7SzQq",
+                        steps: [
+                            "Adjust handles so arms stay parallel to floor.",
+                            "Bring handles together in front of chest with slight elbow bend.",
+                            "Pause briefly at center, then return slowly."
+                        ]
+                    }
+                ]
+            },
+            "shoulder-press": {
+                name: "Overhead Shoulder Press Machine",
+                target: "Shoulders & Triceps",
+                exercises: [
+                    {
+                        name: "Seated Shoulder Press",
+                        youtubeId: "https://youtube.com/shorts/6v4nrRVySj0?si=jmFQa083eudE_l8D",
+                        steps: [
+                            "Adjust seat height so handles are at shoulder level.",
+                            "Press upward directly overhead without arching back.",
+                            "Lower slowly back to ear height."
+                        ]
+                    }
+                ]
+            },
+            "leg-press": {
+                name: "45° Leg Press Machine",
+                target: "Quads, Glutes & Hamstrings",
+                exercises: [
+                    {
+                        name: "Standard Leg Press",
+                        youtubeId: "https://youtube.com/shorts/BnacvXdaxq8?si=lUqp0gsfgzEH98mh",
+                        steps: [
+                            "Place feet shoulder-width apart in middle of sled.",
+                            "Release safety latches and lower weight to 90 degrees.",
+                            "Push through heels back up (do NOT lock knees)."
+                        ]
+                    }
+                ]
+            },
+            "decline-ab-bench": {
+                name: "Decline Ab Crunch Bench",
+                target: "Abs & Core",
+                exercises: [
+                    {
+                        name: "Decline Sit-Ups / Crunches",
+                        youtubeId: "https://youtube.com/shorts/aP4HfrLkOLU?si=7ZnOA-k5ccVxv_ox",
+                        steps: [
+                            "Lock feet securely between horizontal leg rollers.",
+                            "Cross arms over chest or behind head.",
+                            "Contract abdominal muscles to curl body up, lower slowly."
+                        ]
+                    }
+                ]
+            },
+            "wrist-curl-machine": {
+                name: "4-Way Wrist Curl Machine",
+                target: "Forearms & Grip Strength",
+                exercises: [
+                    {
+                        name: "Seated Wrist Curls & Extensions",
+                        youtubeId: "https://youtube.com/shorts/1zBB7ma3TEo?si=tmXXdmSy5h_X9OK4",
+                        steps: [
+                            "Rest forearms flat on arm cushions with wrists hanging over.",
+                            "Grip handles with underhand grip to flex forearms upward.",
+                            "Switch to overhand grip to work upper forearm extensors."
+                        ]
+                    }
+                ]
+            },
+            "dap-cable-machine": {
+                name: "Dual Adjustable Pulley (DAP)",
+                target: "Full Body / Cables",
+                exercises: [
+                    {
+                        name: "Cable Chest Crossover",
+                        youtubeId: "https://youtube.com/shorts/EOKbusjoNtM?si=aVZ3poL29d50CNJW",
+                        steps: [
+                            "Set pulleys above shoulder level and attach single handles.",
+                            "Grasp handles and step forward into a staggered stance.",
+                            "Pull handles together in front of chest in a smooth arc."
+                        ]
+                    },
+                     {
+                        name: "Overhead rope Extension",
+                        youtubeId: "https://youtube.com/shorts/wFnN-o9PZIg?si=YdV4NpP7WButFMBX",
+                        steps: [
+                            "Watch the video"
+                        ]
+                    },
+                    {
+                        name: "Cable rope pull",
+                        youtubeId: "https://youtube.com/shorts/WcXfHh28KGU?si=oBkoVNzqglbxBFLO",
+                        steps: [
+                            "Watch the video"
+                        ]
+                    }
+                ]
+            },
+            "leg-curl-machine": {
+                name: "Leg Curl Machine",
+                target: "Hamstrings",
+                exercises: [
+                    {
+                        name: "Seated / Lying Leg Curl",
+                        youtubeId: "https://youtube.com/shorts/qYuwgGnPBZw?si=GVAD9zY54gFMxlVs",
+                        steps: [
+                            "Adjust lower pad so it rests comfortably against lower calves.",
+                            "Secure thigh pad down firmly to keep hips locked in place.",
+                            "Curl legs downward toward glutes and return with control."
+                        ]
+                    }
+                ]
+            },
+            "smith-machine": {
+                name: "Smith Squat Machine",
+                target: "Quads, Glutes & Core",
+                exercises: [
+                    {
+                        name: "Smith Machine Barbell Squat",
+                        youtubeId: "https://youtube.com/shorts/iKCJCydYYrE?si=yzJjYDwtzsbUr-j3",
+                        steps: [
+                            "Position feet slightly ahead of hips beneath fixed bar.",
+                            "Rotate bar to unlock from safety hooks and rest on upper back.",
+                            "Squat down until thighs are parallel to floor, then drive up."
+                        ]
+                    }
+                ]
+            },
+            "dumbbell-chest-press": {
+                name: "Flat Dumbbell Chest Press",
+                target: "Chest, Shoulders & Triceps",
+                exercises: [
+                    {
+                        name: "Flat Dumbbell Press",
+                        youtubeId: "https://youtube.com/shorts/mTaiQemkEpU?si=k3_YyXILD0iOt0la",
+                        steps: [
+                            "Lie on bench holding dumbbells at chest level, palms forward.",
+                            "Press weights straight up over mid-chest until arms extend.",
+                            "Lower dumbbells back down under control without rushing."
+                        ]
+                    }
+                ]
+            },
+            "dumbbell-fly-bench": {
+                name: "Dumbbell Butterfly Bench",
+                target: "Chest (Inner/Outer Pecs)",
+                exercises: [
+                    {
+                        name: "Flat Bench Dumbbell Fly",
+                        youtubeId: "https://youtube.com/shorts/rk8YayRoTRQ?si=ntl5UJStx0akSYPK",
+                        steps: [
+                            "Lie back holding dumbbells directly above chest.",
+                            "Maintain slight bend in elbows while opening arms wide in arc.",
+                            "Squeeze chest muscles to bring dumbbells back together."
+                        ]
+                    }
+                ]
+            },
+            "incline-bicep-curl": {
+                name: "Incline Biceps Curl Bench",
+                target: "Biceps (Long Head)",
+                exercises: [
+                    {
+                        name: "Incline Dumbbell Bicep Curl",
+                        youtubeId: "https://youtube.com/shorts/uCUaRFlA9vE?si=46IbRTncn89D02kv",
+                        steps: [
+                            "Set bench angle to roughly 45° and lean back.",
+                            "Let arms hang vertically toward floor holding dumbbells.",
+                            "Curl weights upward keeping upper arms completely stationary."
+                        ]
+                    }
+                ]
+            }
+        };
+
+        /* --- SMART YOUTUBE ID EXTRACTOR --- */
+        function extractYouTubeId(urlOrId) {
+            if (!urlOrId) return '';
+            const shortsMatch = urlOrId.match(/shorts\/([a-zA-Z0-9_-]{11})/);
+            if (shortsMatch) return shortsMatch[1];
+            const watchMatch = urlOrId.match(/[?&]v=([a-zA-Z0-9_-]{11})/);
+            if (watchMatch) return watchMatch[1];
+            const shortUrlMatch = urlOrId.match(/youtu\.be\/([a-zA-Z0-9_-]{11})/);
+            if (shortUrlMatch) return shortUrlMatch[1];
+            const cleanIdMatch = urlOrId.match(/^[a-zA-Z0-9_-]{11}$/);
+            if (cleanIdMatch) return urlOrId;
+            return urlOrId;
+        }
+
+        /* --- ADVANCED ROUTING LOGIC WITH FULL URL SYNC --- */
+        function initApp() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const machineKey = urlParams.get('m');
+            const viewParam = urlParams.get('view');
+
+            if (machineKey && gymData[machineKey]) {
+                renderMachineView(machineKey, false);
+            } else if (viewParam === 'catalog') {
+                showCatalog(false);
+            } else {
+                showLanding(false);
+            }
+        }
+
+        function renderMachineView(key, updateHistory = true) {
+            const machine = gymData[key];
+            if (!machine) return;
+
+            hideAllViews();
+
+            if (updateHistory) {
+                window.history.pushState({ page: 'machine', key: key }, '', `?m=${key}`);
+            }
+
+            document.getElementById('machine-view').classList.remove('hidden');
+            document.getElementById('nav-toggle-btn').innerText = "Browse Machines";
+
+            document.getElementById('m-title').innerText = machine.name;
+            document.getElementById('m-target').innerText = machine.target;
+
+            const exerciseContainer = document.getElementById('exercise-list');
+            exerciseContainer.innerHTML = '';
+
+            machine.exercises.forEach(ex => {
+                const videoId = extractYouTubeId(ex.youtubeId);
+                const card = document.createElement('div');
+                card.className = 'exercise-card';
+                card.innerHTML = `
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/${videoId}?rel=0" allowfullscreen></iframe>
+                    </div>
+                    <div class="card-details">
+                        <div class="exercise-name">${ex.name}</div>
+                        <ol class="steps-list">
+                            ${ex.steps.map(s => `<li>${s}</li>`).join('')}
+                        </ol>
+                    </div>
+                `;
+                exerciseContainer.appendChild(card);
+            });
+        }
+
+        function showLanding(updateHistory = true) {
+            if (updateHistory) {
+                window.history.pushState({ page: 'landing' }, '', window.location.pathname);
+            }
+            hideAllViews();
+            document.getElementById('landing-view').classList.remove('hidden');
+            document.getElementById('nav-toggle-btn').innerText = "Browse Machines";
+        }
+
+        function showCatalog(updateHistory = true) {
+            if (updateHistory) {
+                window.history.pushState({ page: 'catalog' }, '', '?view=catalog');
+            }
+            hideAllViews();
+            document.getElementById('catalog-view').classList.remove('hidden');
+            document.getElementById('nav-toggle-btn').innerText = "Home";
+
+            const catalog = document.getElementById('catalog-list');
+            catalog.innerHTML = '';
+
+            Object.keys(gymData).forEach(key => {
+                const m = gymData[key];
+                const item = document.createElement('a');
+                item.className = 'machine-list-item';
+                item.href = `?m=${key}`;
+                item.onclick = (e) => {
+                    e.preventDefault();
+                    renderMachineView(key, true);
+                };
+                item.innerHTML = `
+                    <div>
+                        <strong style="display:block;">${m.name}</strong>
+                        <span style="font-size:0.8rem; color:var(--text-sub);">${m.target}</span>
+                    </div>
+                    <span style="color:var(--accent-color);">→</span>
+                `;
+                catalog.appendChild(item);
+            });
+        }
+
+        function toggleView() {
+            const isCatalogOpen = !document.getElementById('catalog-view').classList.contains('hidden');
+            if (isCatalogOpen) showLanding(true);
+            else showCatalog(true);
+        }
+
+        function hideAllViews() {
+            document.getElementById('landing-view').classList.add('hidden');
+            document.getElementById('machine-view').classList.add('hidden');
+            document.getElementById('catalog-view').classList.add('hidden');
+        }
+
+        function filterMachines() {
+            const query = document.getElementById('search-bar').value.toLowerCase();
+            const items = document.querySelectorAll('.machine-list-item');
+            items.forEach(item => {
+                item.style.display = item.innerText.toLowerCase().includes(query) ? 'flex' : 'none';
+            });
+        }
+
+        /* --- HANDLE PHONE BACK/FORWARD BUTTONS --- */
+        window.onpopstate = function () {
+            initApp();
+        };
+
+        /* --- CAMERA QR SCANNER LOGIC --- */
+        let html5QrCode = null;
+
+        function openCameraScanner() {
+            document.getElementById('scanner-modal').classList.remove('hidden');
+            html5QrCode = new Html5Qrcode("qr-reader");
+
+            html5QrCode.start(
+                { facingMode: "environment" },
+                { fps: 10, qrbox: { width: 250, height: 250 } },
+                (decodedText) => {
+                    closeCameraScanner();
+                    if (decodedText.includes('?m=')) {
+                        const urlParams = new URLSearchParams(decodedText.split('?')[1]);
+                        const machineKey = urlParams.get('m');
+                        if (machineKey && gymData[machineKey]) {
+                            renderMachineView(machineKey, true);
+                            return;
+                        }
+                    }
+                    window.location.href = decodedText;
+                },
+                () => { }
+            ).catch(err => {
+                alert("Camera access failed or permission denied.");
+                closeCameraScanner();
+            });
+        }
+
+        function closeCameraScanner() {
+            if (html5QrCode) {
+                html5QrCode.stop().then(() => {
+                    html5QrCode.clear();
+                    document.getElementById('scanner-modal').classList.add('hidden');
+                }).catch(() => {
+                    document.getElementById('scanner-modal').classList.add('hidden');
+                });
+            } else {
+                document.getElementById('scanner-modal').classList.add('hidden');
+            }
+        }
+
+        window.onload = initApp;
+    </script>
+</body>
+
+</html>
