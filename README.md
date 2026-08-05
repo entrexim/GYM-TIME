@@ -1,1 +1,1 @@
-hiii everyone, so this is a very basic QR based website , it is getting users from the qr that are installed
+hiii everyone, so this is a very basic QR based website , it is getting users from the qr that are installed in the gym so people who wants to coorect their postures and wansts to learn the exercises of a particular machine can scan the QRs to get our website where we store a large amount of data.
